@@ -105,12 +105,10 @@ export default function Home() {
   );
 }
 
-// Styles with Fixes
 const containerStyle = { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'radial-gradient(circle, #2e1065, #000000)', fontFamily: 'sans-serif' };
 const cardStyle = { background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)', padding: '40px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.1)', textAlign: 'center', width: '400px', color: 'white' };
 const titleStyle = { marginBottom: '20px', fontSize: '24px' };
 
-// Added boxSizing: 'border-box' to ensure padding doesn't break width
 const inputStyle = { 
   width: '100%', 
   padding: '15px', 
