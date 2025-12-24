@@ -15,13 +15,11 @@ export default function Home() {
     id: Date.now()
   });
 
-  // Naya Validation Logic
   const nextStep = () => {
-    // Current step ke hisaab se check karein ki field khali toh nahi
     const currentField = ['time', 'day', 'week', 'task', 'notes'][step - 1];
     
     if (!formData[currentField] || formData[currentField].trim() === "") {
-      alert("Kripya ye field bharein!"); // Aap yahan custom error state bhi use kar sakte hain
+      alert("Fiil the input"); 
       return;
     }
 
@@ -64,7 +62,7 @@ export default function Home() {
             <motion.div key="step2" {...slideVariants}>
               <h2 style={titleStyle}>📅 Din?</h2>
               <select style={inputStyle} value={formData.day} onChange={(e) => updateField('day', e.target.value)}>
-                <option value="">Chunein</option>
+                <option value="">Day</option>
                 {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(d => (
                    <option key={d} value={d} style={{color: 'black'}}>{d}</option>
                 ))}
@@ -74,14 +72,14 @@ export default function Home() {
 
           {step === 3 && (
             <motion.div key="step3" {...slideVariants}>
-              <h2 style={titleStyle}>🗓️ Hafta?</h2>
+              <h2 style={titleStyle}>🗓️ Week</h2>
               <input type="week" style={inputStyle} value={formData.week} onChange={(e) => updateField('week', e.target.value)} />
             </motion.div>
           )}
 
           {step === 4 && (
             <motion.div key="step4" {...slideVariants}>
-              <h2 style={titleStyle}>🎯 Kya Kaam Hai?</h2>
+              <h2 style={titleStyle}>🎯 Kya Work Kiya</h2>
               <input type="text" placeholder="Ex: Gym, Study..." style={inputStyle} value={formData.task} onChange={(e) => updateField('task', e.target.value)} />
             </motion.div>
           )}
@@ -136,7 +134,7 @@ const buttonStyle = {
   fontWeight: 'bold', 
   fontSize: '18px', 
   cursor: 'pointer',
-  boxSizing: 'border-box' // Fix for width matching
+  boxSizing: 'border-box'
 };
 
 const progressContainer = { width: '100%', height: '6px', background: '#333', borderRadius: '10px', marginBottom: '30px', overflow: 'hidden' };
