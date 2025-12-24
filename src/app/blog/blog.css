@@ -1,0 +1,65 @@
+/* Container Background */
+.blog-wrapper {
+    background: radial-gradient(circle, #1a1a2e, #0f0f1b);
+    min-height: 100vh;
+}
+
+.blog-main-title {
+    color: #8b5cf6;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Custom Card Design */
+.blog-card-custom {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    color: #e2e8f0;
+    transition: 0.3s;
+}
+
+.btn-primary-custom {
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+}
+
+/* Modal Styling */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.custom-modal-content {
+    background: #161625;
+    border: 1px solid #8b5cf6;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.text-purple { color: #8b5cf6; }
+
+.article-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Responsive Overrides */
+@media (max-width: 576px) {
+    .article-text { font-size: 0.95rem; }
+    .blog-main-title { font-size: 1.8rem; }
+}

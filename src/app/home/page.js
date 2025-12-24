@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import './home.css'; // CSS File Import
 
 export default function Home() {
   const router = useRouter();
@@ -16,10 +17,11 @@ export default function Home() {
   });
 
   const nextStep = () => {
-    const currentField = ['time', 'day', 'week', 'task', 'notes'][step - 1];
+    const fields = ['time', 'day', 'week', 'task', 'notes'];
+    const currentField = fields[step - 1];
     
     if (!formData[currentField] || formData[currentField].trim() === "") {
-      alert("Fiil the input"); 
+      alert("Please fill the input"); 
       return;
     }
 
@@ -44,52 +46,56 @@ export default function Home() {
   };
 
   return (
-    <div style={containerStyle}>
-      <motion.div layout style={cardStyle}>
-        <div style={progressContainer}>
-          <motion.div animate={{ width: `${(step / 5) * 100}%` }} style={progressBar} />
+    <div className="home-container">
+      <motion.div layout className="form-card">
+        {/* Progress Bar */}
+        <div className="progress-container">
+          <motion.div 
+            className="progress-bar"
+            animate={{ width: `${(step / 5) * 100}%` }} 
+          />
         </div>
 
         <AnimatePresence mode="wait">
           {step === 1 && (
-            <motion.div key="step1" {...slideVariants}>
-              <h2 style={titleStyle}>🕒 Time?</h2>
-              <input type="time" style={inputStyle} value={formData.time} onChange={(e) => updateField('time', e.target.value)} />
+            <motion.div key="step1" {...slideVariants} className="step-content">
+              <h2 className="step-title">🕒 Time?</h2>
+              <input type="time" className="step-input" value={formData.time} onChange={(e) => updateField('time', e.target.value)} />
             </motion.div>
           )}
 
           {step === 2 && (
-            <motion.div key="step2" {...slideVariants}>
-              <h2 style={titleStyle}>📅 Din?</h2>
-              <select style={inputStyle} value={formData.day} onChange={(e) => updateField('day', e.target.value)}>
+            <motion.div key="step2" {...slideVariants} className="step-content">
+              <h2 className="step-title">📅 Din?</h2>
+              <select className="step-input" value={formData.day} onChange={(e) => updateField('day', e.target.value)}>
                 <option value="">Day</option>
                 {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(d => (
-                   <option key={d} value={d} style={{color: 'black'}}>{d}</option>
+                   <option key={d} value={d}>{d}</option>
                 ))}
               </select>
             </motion.div>
           )}
 
           {step === 3 && (
-            <motion.div key="step3" {...slideVariants}>
-              <h2 style={titleStyle}>🗓️ Week</h2>
-              <input type="week" style={inputStyle} value={formData.week} onChange={(e) => updateField('week', e.target.value)} />
+            <motion.div key="step3" {...slideVariants} className="step-content">
+              <h2 className="step-title">🗓️ Week</h2>
+              <input type="week" className="step-input" value={formData.week} onChange={(e) => updateField('week', e.target.value)} />
             </motion.div>
           )}
 
           {step === 4 && (
-            <motion.div key="step4" {...slideVariants}>
-              <h2 style={titleStyle}>🎯 Kya Work Kiya</h2>
-              <input type="text" placeholder="Ex: Gym, Study..." style={inputStyle} value={formData.task} onChange={(e) => updateField('task', e.target.value)} />
+            <motion.div key="step4" {...slideVariants} className="step-content">
+              <h2 className="step-title">🎯 Kya Work Kiya</h2>
+              <input type="text" placeholder="Ex: Gym, Study..." className="step-input" value={formData.task} onChange={(e) => updateField('task', e.target.value)} />
             </motion.div>
           )}
 
           {step === 5 && (
-            <motion.div key="step5" {...slideVariants}>
-              <h2 style={titleStyle}>📝 Notes / Info</h2>
+            <motion.div key="step5" {...slideVariants} className="step-content">
+              <h2 className="step-title">📝 Notes / Info</h2>
               <textarea 
                 placeholder="Important details likhein..." 
-                style={{...inputStyle, height: '100px', resize: 'none'}} 
+                className="step-input step-textarea" 
                 value={formData.notes}
                 onChange={(e) => updateField('notes', e.target.value)} 
               />
@@ -97,43 +103,15 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={nextStep} style={buttonStyle}>
+        <motion.button 
+          whileHover={{ scale: 1.02 }} 
+          whileTap={{ scale: 0.98 }} 
+          onClick={nextStep} 
+          className="action-button"
+        >
           {step === 5 ? "Add to Schedule 🚀" : "Next →"}
         </motion.button>
       </motion.div>
     </div>
   );
 }
-
-const containerStyle = { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'radial-gradient(circle, #2e1065, #000000)', fontFamily: 'sans-serif' };
-const cardStyle = { background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)', padding: '40px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.1)', textAlign: 'center', width: '400px', color: 'white' };
-const titleStyle = { marginBottom: '20px', fontSize: '24px' };
-
-const inputStyle = { 
-  width: '100%', 
-  padding: '15px', 
-  marginBottom: '30px', 
-  borderRadius: '12px', 
-  border: 'none', 
-  background: 'rgba(255,255,255,0.1)', 
-  color: 'white', 
-  fontSize: '16px', 
-  outline: 'none',
-  boxSizing: 'border-box' // Fix for width matching
-};
-
-const buttonStyle = { 
-  width: '100%', 
-  padding: '15px', 
-  borderRadius: '12px', 
-  border: 'none', 
-  background: 'linear-gradient(90deg, #8b5cf6, #d946ef)', 
-  color: 'white', 
-  fontWeight: 'bold', 
-  fontSize: '18px', 
-  cursor: 'pointer',
-  boxSizing: 'border-box'
-};
-
-const progressContainer = { width: '100%', height: '6px', background: '#333', borderRadius: '10px', marginBottom: '30px', overflow: 'hidden' };
-const progressBar = { height: '100%', background: '#d946ef' };

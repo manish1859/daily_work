@@ -1,78 +1,80 @@
 "use client";
+import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import './Navbar.css'; // CSS file import
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Navlinks Array
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'My Schedule', path: '/about' },
+    { name: 'Blog', path: '/blog' },
+    { name: 'Privacy', path: '/privacy-policy' }
+  ];
+
   return (
-    <nav style={navStyle}>
-      {/* Logo with Animation */}
-      <motion.div
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+    <nav className="nav-container">
+      {/* 1. Logo Section */}
+      <motion.div 
+        whileHover={{ scale: 1.05 }} 
+        whileTap={{ scale: 0.95 }}
       >
-        <Link href="/" style={logoStyle}>ProPlanner ✨</Link>
+        <Link href="/" className="logo">ProPlanner ✨</Link>
       </motion.div>
 
-      {/* Navigation Links */}
-      <div style={linksStyle}>
-        {[
-          { name: 'Home', path: '/' },
-          { name: 'My Schedule', path: '/about' },
-          { name: 'Blog', path: '/blog' },
-          { name: 'Privacy', path: '/privacy-policy' }
-        ].map((link, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ y: -2, color: '#d946ef' }}
+      {/* 2. Desktop Links (Laptop/PC par dikhega) */}
+      <div className="desktop-links">
+        {navLinks.map((link, index) => (
+          <motion.div 
+            key={index} 
+            whileHover={{ y: -2 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Link href={link.path} style={linkItem}>
+            <Link href={link.path} className="link-item">
               {link.name}
             </Link>
           </motion.div>
         ))}
       </div>
+
+      {/* 3. Mobile Toggle Button (Sirf Mobile par dikhega) */}
+      <div className="menu-btn" onClick={() => setIsOpen(!isOpen)}>
+        <div className="bar" style={{ 
+          transform: isOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none' 
+        }}></div>
+        <div className="bar" style={{ 
+          opacity: isOpen ? 0 : 1 
+        }}></div>
+        <div className="bar" style={{ 
+          transform: isOpen ? 'rotate(-45deg) translate(5px, -6px)' : 'none' 
+        }}></div>
+      </div>
+
+      {/* 4. Mobile Drawer (Toggle hone par khulne wala menu) */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mobile-drawer"
+          >
+            {navLinks.map((link, index) => (
+              <Link 
+                key={index} 
+                href={link.path} 
+                className="mobile-link-item"
+                onClick={() => setIsOpen(false)} // Link click hote hi menu band
+              >
+                {link.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
-
-// --- Dark Theme Styles ---
-
-const navStyle = { 
-  display: 'flex', 
-  justifyContent: 'space-between', 
-  alignItems: 'center',
-  padding: '15px 10%', 
-  background: 'rgba(15, 15, 27, 0.8)', // Semi-transparent Dark
-  backdropFilter: 'blur(10px)', // Glassmorphism effect
-  boxShadow: '0 4px 20px rgba(0,0,0,0.5)', 
-  borderBottom: '1px solid rgba(139, 92, 246, 0.2)', // Purple border
-  position: 'sticky', 
-  top: 0, 
-  zIndex: 1000 
-};
-
-const logoStyle = { 
-  fontSize: '26px', 
-  fontWeight: '900', 
-  textDecoration: 'none', 
-  background: 'linear-gradient(90deg, #8b5cf6, #d946ef)', // Gradient Logo
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  letterSpacing: '1px'
-};
-
-const linksStyle = { 
-  display: 'flex', 
-  gap: '35px',
-  alignItems: 'center'
-};
-
-const linkItem = { 
-  textDecoration: 'none', 
-  color: '#e2e8f0',
-  fontWeight: '600', 
-  fontSize: '15px',
-  letterSpacing: '0.5px',
-  transition: 'color 0.3s ease'
-};
