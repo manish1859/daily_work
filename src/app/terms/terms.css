@@ -1,0 +1,46 @@
+.terms-wrapper {
+    min-height: 100vh;
+    background: #0f0f1b; /* Solid dark for professional look */
+    padding: 100px 0;
+    font-family: 'sans-serif';
+}
+
+.terms-card {
+    background: #161625;
+    border: 1px solid rgba(139, 92, 246, 0.1);
+    border-radius: 12px;
+    color: #94a3b8;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.terms-title {
+    font-size: 2.5rem;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.terms-subtitle {
+    color: #8b5cf6;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.terms-text {
+    line-height: 1.8;
+    text-align: justify;
+    font-size: 1rem;
+}
+
+.highlight {
+    color: #e2e8f0;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .terms-wrapper { padding: 60px 15px; }
+    .terms-title { font-size: 1.8rem; }
+}

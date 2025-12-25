@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 91vh;
     background: radial-gradient(circle, #2e1065, #000000);
     font-family: 'sans-serif';
 }
@@ -53,15 +53,16 @@
     color: white;
     font-size: 16px;
     outline: none;
-    box-sizing: border-box; /* Fix for overflow */
+    box-sizing: border-box; 
 }
 
 .step-input option {
-    background: #1a1a1a;
+    background: rgb(19, 5, 50,0.7);
+    border-radius: 8px;
     color: white;
+    padding: 10px;
 }
 
-/* Textarea specific */
 .step-textarea {
     height: 100px;
     resize: none;

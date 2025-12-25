@@ -77,7 +77,6 @@ export default function Blog() {
           Productivity Hub
         </motion.h1>
         
-        {/* Bootstrap Responsive Grid */}
         <div className="row g-4">
           {blogData.map((post) => (
             <div key={post.id} className="col-12 col-md-6 col-lg-4">
