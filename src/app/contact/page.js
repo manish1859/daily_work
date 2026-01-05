@@ -122,7 +122,6 @@ export default function Contact() {
       </div>
     </motion.div>
 
-    {/* Response Time Card */}
     <motion.div className="info-item-card" whileHover={{ x: 10 }}>
       <div className="icon-wrapper">⚡</div>
       <div className="info-content">
