@@ -4,6 +4,12 @@ import { ImPower } from "react-icons/im";
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GrSchedules } from "react-icons/gr";
+import { FaRocket } from "react-icons/fa6";
+import { FaBrain } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+import { CiClock2 } from "react-icons/ci";
+
+
 import './home.css';
 
 export default function Home() {
@@ -58,7 +64,6 @@ export default function Home() {
   return (
     <div className="home-container">
       {!showForm ? (
-        /* --- HERO SECTION WITH 700+ WORDS CONTENT --- */
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
@@ -86,20 +91,47 @@ export default function Home() {
               your schedule helps you navigate through the day's unique challenges.
             </p>
 
-            <div className="features-grid row my-5">
-              <div className="col-md-4 feature-card">
-                <h4>🚀 Productivity Boost</h4>
-                <p>Studies show that writing down tasks increases completion rates by 42%.</p>
-              </div>
-              <div className="col-md-4 feature-card">
-                <h4>🧠 Mental Clarity</h4>
-                <p>Reduce the cognitive load on your brain by outsourcing your memory to ProPlanner.</p>
-              </div>
-              <div className="col-md-4 feature-card">
-                <h4>🔒 Privacy First</h4>
-                <p>Your data stays on your device. We don't store your personal routines on our servers.</p>
-              </div>
-            </div>
+<div className="container features-grid my-5">
+  <div className="row g-4 justify-content-center">
+    
+    {/* Card 1: Productivity */}
+    <div className="col-lg-4 col-md-6 col-sm-12">
+      <motion.div whileHover={{ y: -10 }} className="feature-card h-100">
+        <div className="icon-badge rocket-bg">
+          <FaRocket />
+        </div>
+        <h4>Productivity Boost</h4>
+        <p>Scientific studies prove that documenting tasks digitally or on paper increases your success rate by up to 42%.</p>
+        <div className="card-glow"></div>
+      </motion.div>
+    </div>
+
+    {/* Card 2: Mental Clarity */}
+    <div className="col-lg-4 col-md-6 col-sm-12">
+      <motion.div whileHover={{ y: -10 }} className="feature-card h-100">
+        <div className="icon-badge brain-bg">
+          <FaBrain />
+        </div>
+        <h4>Mental Clarity</h4>
+        <p>Offload your daily stress. ProPlanner acts as your external brain, letting you focus on execution, not memorization.</p>
+        <div className="card-glow"></div>
+      </motion.div>
+    </div>
+
+    {/* Card 3: Privacy */}
+    <div className="col-lg-4 col-md-6 col-sm-12">
+      <motion.div whileHover={{ y: -10 }} className="feature-card h-100">
+        <div className="icon-badge lock-bg">
+          <FaLock />
+        </div>
+        <h4>Privacy First</h4>
+        <p>Your data is yours. We use client-side encryption and LocalStorage so your routines never touch any external server.</p>
+        <div className="card-glow"></div>
+      </motion.div>
+    </div>
+
+  </div>
+</div>
 
             <h3>How to use ProPlanner effectively?</h3>
             <p>
@@ -125,59 +157,85 @@ export default function Home() {
         </motion.div>
       ) : (
         /* --- FORM SECTION --- */
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="form-card">
-          <div className="progress-container">
-            <motion.div className="progress-bar" animate={{ width: `${(step / 4) * 100}%` }} />
-          </div>
-          
-          <div className="form-header mb-4">
-            <span className="badge-category">{category} Mode</span>
-          </div>
+<motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="form-card interactive-card">
+  {/* Progress Header */}
+  <div className="progress-wrapper mb-4">
+    <div className="progress-info">
+       <span className="step-count">Step {step} of 4</span>
+       <span className="badge-mode">{category === 'Timetable' ? '📅 Timetable' : '⚡ Schedule'}</span>
+    </div>
+    <div className="progress-container">
+      <motion.div className="progress-bar" animate={{ width: `${(step / 4) * 100}%` }} />
+    </div>
+  </div>
 
-          <AnimatePresence mode="wait">
-            {step === 1 && (
-              <motion.div key="step1" initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -20, opacity: 0 }} className="step-content">
-                <h2 className="step-title">🕒 Set Time</h2>
-                <input type="time" className="step-input" style={{ colorScheme: 'dark' }} value={formData.time} onChange={(e) => updateField('time', e.target.value)} />
-              </motion.div>
-            )}
+  <AnimatePresence mode="wait">
+    <motion.div 
+      key={`${category}-${step}`}
+      initial={{ y: 20, opacity: 0 }} 
+      animate={{ y: 0, opacity: 1 }} 
+      exit={{ y: -20, opacity: 0 }}
+      className="step-content"
+    >
+      {/* Icon Showcase Area */}
+      <div className={`icon-showcase ${category === 'Timetable' ? 'purple-glow' : 'pink-glow'}`}>
+        {step === 1 && <CiClock2 />}
+        {step === 2 && <GrSchedules />}
+        {step === 3 && (category === 'Timetable' ? <FaBookOpen /> : <FaTasks />)}
+        {step === 4 && (category === 'Timetable' ? <FaMapMarkerAlt /> : <FaStickyNote />)}
+      </div>
 
-            {step === 2 && (
-              <motion.div key="step2" initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -20, opacity: 0 }} className="step-content">
-                <h2 className="step-title">📅 Select Day</h2>
-                <select className="step-input" value={formData.day} onChange={(e) => updateField('day', e.target.value)}>
-                  <option value="">Choose Day</option>
-                  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(d => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
-                </select>
-              </motion.div>
-            )}
+      <h2 className="step-title-new">
+        {step === 1 && (category === 'Timetable' ? 'Routine Time' : 'Task Time')}
+        {step === 2 && 'Select Day'}
+        {step === 3 && (category === 'Timetable' ? 'Subject Name' : 'What is the task?')}
+        {step === 4 && (category === 'Timetable' ? 'Location/Room' : 'Extra Notes')}
+      </h2>
 
-            {step === 3 && (
-              <motion.div key="step3" initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -20, opacity: 0 }} className="step-content">
-                <h2 className="step-title">🎯 Your Task</h2>
-                <input type="text" placeholder="e.g., Morning Yoga, Project Sync..." className="step-input" value={formData.task} onChange={(e) => updateField('task', e.target.value)} />
-              </motion.div>
-            )}
+      {/* Inputs */}
+      {step === 1 && (
+        <input type="time" className="step-input-new" style={{ colorScheme: 'dark' }} value={formData.time} onChange={(e) => updateField('time', e.target.value)} />
+      )}
 
-            {step === 4 && (
-              <motion.div key="step4" initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -20, opacity: 0 }} className="step-content">
-                <h2 className="step-title">📝 Final Notes</h2>
-                <textarea placeholder="Any specific details or sub-tasks?" className="step-input step-textarea" value={formData.notes} onChange={(e) => updateField('notes', e.target.value)} />
-              </motion.div>
-            )}
-          </AnimatePresence>
+      {step === 2 && (
+        <select className="step-input-new" value={formData.day} onChange={(e) => updateField('day', e.target.value)}>
+          <option value="">Choose Day</option>
+          {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(d => (
+            <option key={d} value={d}>{d}</option>
+          ))}
+        </select>
+      )}
 
-          <div className="btn-group-nav">
-             <button onClick={nextStep} className="action-button">
-              {step === 4 ? "Save Plan ✨" : "Next Step →"}
-            </button>
-            <button className="btn-link mt-3" style={{color: '#94a3b8', background: 'none', border: 'none'}} onClick={() => setShowForm(false)}>
-              Cancel & Go Back
-            </button>
-          </div>
-        </motion.div>
+      {step === 3 && (
+        <input 
+          type="text" 
+          placeholder={category === 'Timetable' ? "e.g. Computer Science" : "e.g. Go to Gym"} 
+          className="step-input-new" 
+          value={formData.task} 
+          onChange={(e) => updateField('task', e.target.value)} 
+        />
+      )}
+
+      {step === 4 && (
+        <textarea 
+          placeholder={category === 'Timetable' ? "Room 203 or Lab..." : "Bring headphones..."} 
+          className="step-input-new textarea-new" 
+          value={formData.notes} 
+          onChange={(e) => updateField('notes', e.target.value)} 
+        />
+      )}
+    </motion.div>
+  </AnimatePresence>
+
+  <div className="btn-footer">
+    <button onClick={nextStep} className="action-button-glow">
+      {step === 4 ? "Finalize Plan ✨" : "Continue →"}
+    </button>
+    <button className="back-link" onClick={() => {setShowForm(false); setStep(1);}}>
+      ← Restart
+    </button>
+  </div>
+</motion.div>
       )}
     </div>
   );
